@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:16.8-alpine3.20
+    container_name: fleet_hub
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: fleet_hub
+      TZ: UTC
+    ports:
+      - "5437:5432"
+    volumes:
+      - fleet-hub-db:/var/lib/postgresql/data
+
+volumes:
+  fleet-hub-db:
