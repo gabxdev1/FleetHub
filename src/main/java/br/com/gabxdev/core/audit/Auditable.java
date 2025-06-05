@@ -29,12 +29,12 @@ public abstract class Auditable {
 
     @CreatedBy
     @Column(updatable = false, nullable = false)
-    private Long createdBy;
+    private String createdBy;
 
     @LastModifiedDate
     @Column(nullable = false)
     private Instant updatedAt;
 
     @LastModifiedBy
-    private Long updatedBy;
+    private String updatedBy;
 }

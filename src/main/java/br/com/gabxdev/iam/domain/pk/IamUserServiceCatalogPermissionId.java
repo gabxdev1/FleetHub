@@ -13,7 +13,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IamUserServiceCatalogPermissionId implements Serializable {
-
     private Long userId;
 
     private Long serviceCatalogId;

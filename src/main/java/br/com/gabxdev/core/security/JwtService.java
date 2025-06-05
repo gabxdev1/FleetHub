@@ -17,7 +17,7 @@ public class JwtService {
 
     private final FleetHubProperties fleetHubProperties;
 
-    public String generateToken(Long userId) {
+    public String generateToken(Long userId, LoginType loginType) {
         var now = Instant.now();
         var expirationSeconds = fleetHubProperties.getJwt().getExpirationSeconds();
         var expirationDate = Date.from(now.plusSeconds(expirationSeconds));
@@ -25,6 +25,7 @@ public class JwtService {
         return Jwts.builder()
                 .subject(userId.toString())
                 .issuer("https://gabxdev.gabxdev.com")
+                .claim("loginType", loginType.toString())
                 .audience().add("FleetHub")
                 .and()
                 .issuedAt(Date.from(now))
@@ -44,6 +45,19 @@ public class JwtService {
                 .getSubject();
 
         return Long.parseLong(userId);
+    }
+
+    public LoginType extractLoginTypeAndValidate(String token) {
+        var loginType = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .requireAudience("FleetHub")
+                .requireIssuer("https://gabxdev.gabxdev.com")
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("loginType", String.class);
+
+        return LoginType.valueOf(loginType);
     }
 
     private SecretKey getSigningKey() {

@@ -17,9 +17,26 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
 fleet-hub:
   jwt:
     expiration-seconds: 36000
     secret-key: ${SECRET_KEY}
   security:
-    whitelist: "/login,/signup"
+    whitelist: "/auth/login,/auth/signup,/auth/login/iam-user"
+  iam:
+    id: 1
+    name: "IAM"
+    code: "IAM"
+    description: "Identity and Access Management"
+  project-management:
+    id: 2
+    name: "Project Management"
+    code: "PROJECT_MANAGEMENT"
+    description: "Responsible for managing operational projects that organize and group vehicles, activities, and resources. Projects can represent worksites, contracts, operational areas, or any business entity that requires tracking of assets and operations."
+  fleet-management:
+    id: 3
+    name: "Fleet Management"
+    code: "FLEET_MANAGEMENT"
+    description: "Module responsible for registering vehicles, machines, and fleet assets. It centralizes and organizes asset information to support other operational processes like fueling and maintenance."
